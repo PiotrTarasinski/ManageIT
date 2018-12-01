@@ -1,0 +1,46 @@
+.main .row{
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.main .col-md{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.branding_image{
+    width: 100%;
+}
+
+.page_info{
+    background-color: rgba(100,82,190,0.8);
+    border-radius: 12px;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+}
+
+.page_info_container{
+    padding: 40px 40px 40px 40px;
+}
+
+.higlighted_text{
+    font-weight: bold;
+    color: #4bcef9;
+}
+
+
+
+@media (max-width: 767.98px) {
+    .brand_img{
+        display: none !important;
+    }
+    .page_info_container{
+        padding: 30px 10px 30px 10px;
+    }
+    
+    .main .row{
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}

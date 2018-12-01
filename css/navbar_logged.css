@@ -1,0 +1,15 @@
+.nav_avatar_container{
+    width: 46px;
+    height: 46px;
+    display: inline-block;
+    border: 1px solid #4bcef9;
+}
+
+.username{
+    display: inline-block;
+    padding-left: 6px;
+    padding-right: 2px;
+}
+
+.dropdown-toggle::after{
+}
