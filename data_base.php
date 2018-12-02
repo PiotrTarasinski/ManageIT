@@ -24,6 +24,11 @@ class db{
         $result = $this->mysqli->query($sql);
         return $result;
     }
+
+    public function get_inserted_id(){
+        $result = $this->mysqli->insert_id;
+        return $result;
+    }
 }
 
 ?>

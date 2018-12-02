@@ -40,36 +40,61 @@
             <button class="add_event_button"><i class="fas fa-calendar-plus"></i> Dodaj wydarzenie</button>
             <div class="main">
                 <div class="row">
-                    <!--CARD-->
-                    <div class="col">
-                        <div class="event_card">
-                            <div class="event_card_img_container">
-                                <span class="edit_icon" onclick="editEvent(this)" data-disabled="1" data-id="1"><i class="fas fa-edit"></i></span>
-                                <span class="delete_icon"  data-id="1"><i class="fas fa-trash-alt"></i></span>
-                                <label for="add_event_card_img" onclick="triggerInputFile(this)" class="add_img_button" data-id="1"></label>
-                                <input name="event_card_img" disabled onchange="previewLogo(this)" type="file" class="input_file" accept="image/*" data-function="input-file" data-type="input" data-id="1"/>
-                                <img class="event_card_img" src="img/manageIT_logo.png" alt="Event Image" data-type="preview" data-id="1">
-                            </div>
-                            <div class="event_card_body">
-                                <input class="event_card_title" disabled type="text" name="event_title" value="IT Academic Day 2018" data-type="input" data-id="1"/>
-                                <div class="event_card_date" id="date_time_picker">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <input id="event_date" disabled class="event_card_date_value" type="text" value="2018-12-11" data-type="input" data-id="1">
-                                </div> 
-                                <div class="event_card_creator">
-                                    <p class="font-weight-bold">Założyciel:</p>
-                                    <div class="event_card_creator_avatar_container">
-                                        <img class="avatar_image" src="img/default_avatar.png" alt="Creator avatar">
+                <?php
+                    require_once "data_base.php";
+                    $db = new db();
+                    $sql = "SELECT members.event_id AS 'event_id' FROM members WHERE members.member_id=".$_SESSION['user_id']."";
+                    if($result = $db->query($sql)){
+                        while($events_id = $result->fetch_assoc()){
+                            $sql = "SELECT events.creator_id, events.logo_src, events.title, events.date, users.avatar_src, users.username, events.description FROM events, users WHERE events.id=".$events_id['event_id']." AND events.creator_id=users.id";
+                            if($result2 = $db->query($sql)){
+                                $events_variable = $result2->fetch_assoc();
+                                echo 
+                                '<!--CARD-->
+                                <div class="col">
+                                    <div class="event_card">
+                                        <div class="event_card_img_container">';
+                                            if($events_variable['creator_id']==$_SESSION['user_id']){
+                                                echo
+                                                '<span class="edit_icon" onclick="editEvent(this)" data-disabled="1" data-id="'.$events_id['event_id'].'"><i class="fas fa-edit"></i></span>
+                                                <span class="delete_icon"  data-id="'.$events_id['event_id'].'"><i class="fas fa-trash-alt"></i></span>';
+                                            }
+                                            echo
+                                            '<label for="add_event_card_img" onclick="triggerInputFile(this)" class="add_img_button hide" data-id="'.$events_id['event_id'].'">
+                                                 <i class="fas fa-images"></i>
+                                            </label>
+                                            <input name="event_card_img" disabled onchange="previewLogo(this)" type="file" class="input_file" accept="image/*" data-function="input-file" data-type="input" data-id="'.$events_id['event_id'].'"/>
+                                            <img class="event_card_img" src="';
+                                            if($events_variable['logo_src']!="NULL"){
+                                                echo $events_variable['logo_src'];
+                                            }
+                                            echo
+                                            '" data-type="preview" data-id="'.$events_id['event_id'].'">
+                                        </div>
+                                        <div class="event_card_body">
+                                            <input class="event_card_title" disabled type="text" name="event_title" value="'.$events_variable['title'].'" data-type="input" data-id="'.$events_id['event_id'].'"/>
+                                            <div class="event_card_date">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <input disabled class="event_card_date_value" type="text" value="'.$events_variable['date'].'" data-type="input" data-id="'.$events_id['event_id'].'">
+                                            </div> 
+                                            <div class="event_card_creator">
+                                                <p class="font-weight-bold">Założyciel:</p>
+                                                <div class="event_card_creator_avatar_container">
+                                                    <img class="avatar_image" src="'.$events_variable['avatar_src'].'" alt="Creator avatar">
+                                                </div>
+                                                <p>'.$events_variable['username'].'</p>
+                                            </div>
+                                            <p class="font-weight-bold">Opis:</p>
+                                            <textarea class="event_card_description" disabled rows="4" name="event_description" data-type="input" data-id="'.$events_id['event_id'].'">'.$events_variable['description'].'</textarea>
+                                            <button class="enter_event_button" data-id="'.$events_id['event_id'].'">WEJDŹ</button>
+                                        </div>
                                     </div>
-                                    <p>Piotr Tarasiński</p>
                                 </div>
-                                <p class="font-weight-bold">Opis:</p>
-                                <textarea class="event_card_description" disabled rows="4" name="event_description" data-type="input" data-id="1">Jakiś super opis no kurde ale on jest piękny. Super wydarzenie!Jakiś super opis no kurde ale on jest piękny. Super wydarzenie!Jakiś super opis no kurde ale on jest piękny. Super wydarzenie!</textarea>
-                                <button class="enter_event_button" data-id="1">WEJDŹ</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!--CARD END-->
+                                <!--CARD END-->';
+                            }
+                        }
+                    }
+                ?>
                 </div>
             </div>
             
@@ -77,7 +102,7 @@
     </div>
         
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <!-- Optional JavaScript -->

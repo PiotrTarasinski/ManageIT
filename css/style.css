@@ -88,3 +88,6 @@ nav{
     text-decoration: none;
 }
 
+.hide{
+    display: none !important;
+}
