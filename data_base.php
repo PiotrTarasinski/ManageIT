@@ -12,6 +12,9 @@ class db{
             echo "Nie udało się połączyć z serwerem bazy danych";
             exit();
         }
+        if($this->mysqli->set_charset("utf8")){
+            //zmieniono kodowanie   
+        }
     }
     function __destruct(){
         $this->mysqli->close();
