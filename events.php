@@ -43,15 +43,14 @@
                 <?php
                     require_once "data_base.php";
                     $db = new db();
-                    $sql = "SELECT members.event_id AS 'event_id' FROM members WHERE members.member_id=".$_SESSION['user_id']."";
+                    $sql = "SELECT members.event_id FROM members WHERE members.member_id=".$_SESSION['user_id']."";
                     if($result = $db->query($sql)){
                         while($events_id = $result->fetch_assoc()){
                             $sql = "SELECT events.creator_id, events.logo_src, events.title, events.date, users.avatar_src, users.username, events.description FROM events, users WHERE events.id=".$events_id['event_id']." AND events.creator_id=users.id";
                             if($result2 = $db->query($sql)){
                                 $events_variable = $result2->fetch_assoc();
                                 echo 
-                                '<!--CARD-->
-                                <div class="col">
+                                '<div class="col">
                                     <div class="event_card">
                                         <div class="event_card_img_container">';
                                             if($events_variable['creator_id']==$_SESSION['user_id']){
@@ -89,8 +88,7 @@
                                             <button class="enter_event_button" data-id="'.$events_id['event_id'].'">WEJDŹ</button>
                                         </div>
                                     </div>
-                                </div>
-                                <!--CARD END-->';
+                                </div>';
                             }
                         }
                     }

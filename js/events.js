@@ -13,12 +13,12 @@ $(document).ready(function(){
             $(".edit_icon:first").trigger('click');
         })
     });
-    //go to event page
-    $(".enter_event_button").click(function(){
-        var event_id = this.getAttribute('data-id');
-        $(location).attr('href','event_manager.php?event_id='+event_id);
-    })
+});
 
+//go to event page
+$(document).on('click','.enter_event_button', function() {
+    var event_id = this.getAttribute('data-id');
+    $(location).attr('href','event_manager.php?event_id='+event_id);
 });
 
 //this function allow to preview choosen image as logo of the event 

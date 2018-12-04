@@ -23,6 +23,8 @@ body{
 ::-webkit-scrollbar-track {
     background-color: #f7f7f9;
     border-radius: 12px;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 nav{
@@ -41,8 +43,8 @@ nav{
     background-image: url(../img/landing_page_background.png);
     background-size: cover;
     background-position: center;
-    background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .input_file{

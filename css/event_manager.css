@@ -1,12 +1,12 @@
 .events_header{
     background-color: #fff;
     display: inline-block;
-    width: 210px;
+    width: 180px;
     text-align: center;
     border-radius: 16px;
     font-size: 18px;
     font-weight: bold;
-    padding: 6px 12px 6px 12px;
+    padding: 6px 8px 6px 8px;
     margin-top: 40px;
     color: rgba(0,0,0,0.65);
 }
@@ -24,15 +24,257 @@
     outline: none;
 }
 
+.add_member , .add_task{
+    font-size: 11px;
+    color: #fff;
+    background-color: #27ae60;
+    padding: 4px 8px 4px 8px;
+    border-radius: 12px;
+    opacity: 0.8;
+}
+
+.add_member:hover , .add_task:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.tasks_container{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 .add_friends:hover{
     opacity: 1;
     cursor: pointer;
 }
 
+
 .main{
     margin-top: 20px;
-    padding: 20px 20px 20px 20px;
     width: 100%;
-    background-color: rgba(255,255,255,0.45);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    height: 520px;
+}
+
+.task_card{
+    position: relative;
+    padding: 10px 0px 20px 20px;
+    width: 340px;
+    min-width: 340px;
+    background-color: #fff;
+    border-radius: 8px;
+    color: rgba(0,0,0,0.65);
+    margin-right: 24px;
+}
+
+.delete_task_list{
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    right: 2px;
+    color: #f12727;
+    opacity: 0.6;
+    transition: opacity 0.5s;
+}
+
+.delete_task_list:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.task_title{
+    font-weight: bold;
+    font-size: 16px;
+    width: 302px !important;
+}
+
+.task_card_body{
+    max-height: 460px;
+    overflow-y: auto;
+    padding-right: 16px;
+    margin-right: 2px;
+}
+
+input[type="text"]{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    transition: border 0.5s;
+    border-radius: 2px;
+}
+
+
+h5{
+    clear: both;
+    font-size: 16px;
+}
+
+.date_title{
+    float: left;
+    padding-right: 10px;
+    font-size: 16px;
+    margin: 0;
+}
+
+.task_card_date{
+    width: 86px;
+    background-color: #6e5dff;
+    border-radius: 16px;
+    margin-top: 6px;
+    padding: 2px 4px 2px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.85);
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.task_date_value{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 71px !important;
+    color: rgba(255,255,255,0.85);
+    font-weight: bold;
+    border: none !important;
+    padding-left: 4px;
+}
+
+.members_container{
+    max-height: 144px;
+    overflow-y: auto;
+    margin-bottom: 6px;
+}
+
+.member_container{
+    position: relative;
+    padding: 6px 12px 6px 12px;
+    border-radius: 8px;
+    background-color: rgba(0,0,0,0.02);
+    margin-bottom: 6px;
+    margin-right: 6px;
+    transition: background 0.5s;
+}
+
+.member_container:hover{
+    background-color: rgba(0,0,0,0.06);
+}
+
+.avatar_container{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #4bcef9;
+    display: inline-block;
+}
+
+.member_name{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.delete_member{
+    position: absolute;
+    z-index: 10;
+    right: 12px;
+    top: 9px;
+    color: #f12727;
+    opacity: 0.6;
+    transition: opacity 0.5s;
+}
+
+.delete_member:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.main::-webkit-scrollbar {
+    width: 8px;
     border-radius: 12px;
+}
+
+.main::-webkit-scrollbar-thumb {
+    background:-webkit-linear-gradient(90deg, rgb(75, 206, 249) 0%, rgb(141, 130, 255) 50%, rgb(110, 93, 255) 80%);
+    background:-o-linear-gradient(90deg, rgb(75, 206, 249) 0%, rgb(141, 130, 255) 50%, rgb(110, 93, 255) 80%);
+    background:-moz-linear-gradient(90deg, rgb(75, 206, 249) 0%, rgb(141, 130, 255) 50%, rgb(110, 93, 255) 80%);
+    background:linear-gradient(90deg, rgb(75, 206, 249) 0%, rgb(141, 130, 255) 50%, rgb(110, 93, 255) 80%);
+    background-clip: padding-box;
+    border-radius: 12px;
+}
+
+.main::-webkit-scrollbar-track {
+    background-color: #f7f7f9;
+    border-radius: 12px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.task{
+    position: relative;
+    background-color: rgba(0,0,0,0.02);
+    border-radius: 8px;
+    padding: 12px 6px 12px 10px;
+    margin-bottom: 9px;
+}
+
+.task_checkbox{
+    display: inline-block;
+}
+
+.task_description{
+    width: 260px !important;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.delete_task{
+    position: absolute;
+    z-index: 10;
+    right: -6px;
+    top: -10px;
+    color: #f12727;
+    opacity: 0.6;
+    transition: opacity 0.5s;
+}
+
+.delete_task:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.add_task_list{
+    width: 340px;
+    min-width: 340px;
+    height: 40px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #27ae60;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transform: opacity 0.5s;
+}
+
+.add_task_list:hover{
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.add_task_list_container{
+    min-height: 500px;
+}
+
+.progress-bar{
+    width: 0%;
 }

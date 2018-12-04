@@ -14,11 +14,13 @@
         $user_count = $result->num_rows;
         if($user_count<1){
             header('Location: events.php');
+            unset($db);
             exit();
         }
     }
     else{
         header('Location: events.php');
+        unset($db);
         exit();
     }
     require_once "navbar.php";
@@ -51,38 +53,77 @@
             display_navbar();
         ?>
         
-        <div class="container">
+        <div class="tasks_container">
             <h1 class="events_header">IT Academic Day 2018</h1>
             <button class="add_friends"><i class="fas fa-user-plus"></i> Zaproś znajomych</button>
             <div class="main">
-                <div class="task_card">
-                    <div class="task_container">
-                        <input type="text" data-id=""/>
-                    </div>
-                    <div class="task_container">
-                        <h5>Opis</h5>
-                        <textarea class="event_card_description" rows="4" data-type="input" data-id=""></textarea>
-                    </div>
-                    <div class="task_container">
-                        <div class="event_card_date">
-                            <i class="fas fa-calendar-alt"></i>
-                            <input class="task_date_value" type="text" value="" data-type="input" data-id="">
-                        </div>
-                    </div>
-                    <div class="task_container">
-                        <h5>Odpowiedzialni:</h5>
-                        <div class="task_member_container">
-                            <div class="avatar_container">
-                                <img class="avatar_image" src="" alt="Avatar Image">
+            
+            <?php
+                $sql = "SELECT * FROM tasks_list WHERE event_id = ".$_GET['event_id']."";
+                if($result = $db->query($sql)){
+                    while($task_list = $result->fetch_assoc()){
+                        echo
+                        '<div>
+                        <div class="task_card" data-id="'.$task_list['id'].'">
+                            <span class="delete_task_list" data-id="'.$task_list['id'].'"><i class="fas fa-trash-alt"></i></span>
+                            <input class="task_title" type="text" data-type="input" data-id="'.$task_list['id'].'" data-name="title" value="'.$task_list['title'].'"/>
+                            <div class="task_card_body">
+                                <div class="task_date_container">
+                                    <p class="date_title"><i class="fas fa-calendar-alt"></i> Termin</p>
+                                    <div class="task_card_date">
+                                        <input class="task_date_value" type="text" value="'.$task_list['date'].'" data-type="input" data-name="date" data-id="'.$task_list['id'].'">
+                                    </div>
+                                </div>
+                                <h5><i class="fas fa-code-branch"></i> Ukończono</h5>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="'.$task_list['progress'].'" aria-valuemin="0" aria-valuemax="100" data-id="'.$task_list['id'].'">'.$task_list['progress'].'%</div>
+                                </div>
+                                <h5><i class="fas fa-users"></i> Odpowiedzialni <span class="add_member" data-id="'.$task_list['id'].'"><i class="fas fa-user-plus"></i> Dodaj</span></h5>
+                                <div class="members_container" >';
+                                $sql = "SELECT tasks_members.member_id , users.avatar_src, users.username from tasks_members, users WHERE tasks_members.task_id=".$task_list['id']."";
+                                if($result2 = $db->query($sql)){
+                                    while($members_list = $result2->fetch_assoc()){
+                                        echo
+                                        '<div class="member_container" data-id="'.$task_list['id'].'" data-user_id="'.$members_list['member_id'].'">
+                                            <div class="avatar_container">
+                                                <img class="avatar_image" src="'.$members_list['avatar_src'].'" alt="Avatar Image">
+                                            </div>
+                                            <p class="member_name">'.$members_list['username'].'</p>
+                                            <span class="delete_member" data-id="'.$task_list['id'].'" data-user_id="'.$members_list['member_id'].'"><i class="fas fa-times-circle"></i></span>
+                                        </div>';
+                                    }
+                                }
+                                echo
+                                '</div>  
+                                <h5>Zadania <span class="add_task" data-id="'.$task_list['id'].'"><i class="fas fa-thumbtack"></i> Dodaj zadanie</span></h5>
+                                <div class="task_container" data-id="'.$task_list['id'].'">';
+                                $sql = "SELECT * from tasks WHERE task_list_id=".$task_list['id']."";
+                                if($result3 = $db->query($sql)){
+                                    while($task = $result3->fetch_assoc()){
+                                        echo
+                                        '<div class="task" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'">
+                                            <span class="delete_task" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'"><i class="fas fa-times-circle"></i></span>';
+                                            if($task['status']==0){
+                                                echo '<input class="task_checkbox" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'" type="checkbox">';
+                                            }
+                                            else{
+                                                echo '<input class="task_checkbox" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'" type="checkbox" checked>';
+                                            }
+                                            echo
+                                            '<input class="task_description" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'" data-type="input" value="'.$task['description'].'" type="text"/>
+                                        </div>';
+                                    }
+                                }
+                                echo
+                                '</div>
                             </div>
-                            <p class="username">Piotr Tarasiński</p>
                         </div>
-                    </div>  
-                    <div class="task_container">
-                        <div class="subtask_container">
-                            
-                        </div>
-                    </div>
+                        </div>';
+                    }
+                }
+            ?>
+                <div class="add_task_list_container">
+                    <span class="add_task_list"><i class="fas fa-tasks pr-2"></i>Dodaj nową listę zadań</span>
                 </div>
             </div>
         </div>
