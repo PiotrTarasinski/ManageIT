@@ -1,4 +1,10 @@
+html{
+    overflow-x: visible;
+}
+
 .events_header{
+    position: relative;
+    z-index: 2;
     background-color: #fff;
     display: inline-block;
     width: 180px;
@@ -41,13 +47,13 @@
 .tasks_container{
     margin-left: 20px;
     margin-right: 20px;
+    overflow-y: visible;    
 }
 
 .add_friends:hover{
     opacity: 1;
     cursor: pointer;
 }
-
 
 .main{
     margin-top: 20px;
@@ -57,7 +63,7 @@
     padding-bottom: 20px;
     display: flex;
     justify-content: flex-start;
-    height: 520px;
+    min-height: calc(100vh - 210px);
 }
 
 .task_card{
@@ -93,7 +99,7 @@
 }
 
 .task_card_body{
-    max-height: 460px;
+    max-height: 420px;
     overflow-y: auto;
     padding-right: 16px;
     margin-right: 2px;
@@ -228,10 +234,11 @@ h5{
 
 .task_checkbox{
     display: inline-block;
+    margin-right: 5px;
 }
 
 .task_description{
-    width: 260px !important;
+    width: 254px !important;
     display: inline-block;
     font-size: 14px;
 }
@@ -269,10 +276,6 @@ h5{
 .add_task_list:hover{
     opacity: 1.0;
     cursor: pointer;
-}
-
-.add_task_list_container{
-    min-height: 500px;
 }
 
 .progress-bar{

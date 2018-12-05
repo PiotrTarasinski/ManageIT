@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet"href="css/event_manager.css">
     <link rel="stylesheet" href="css/navbar_logged.css">
+    <link rel="stylesheet" href="css/windows.css">
 </head>
 
 <body>
@@ -54,7 +55,15 @@
         ?>
         
         <div class="tasks_container">
-            <h1 class="events_header">IT Academic Day 2018</h1>
+            <h1 class="events_header">
+            <?php
+            $sql = "SELECT title from events WHERE events.id=".$event_id."";
+            if($result = $db->query($sql)){
+                $event_title = $result->fetch_assoc();
+                echo $event_title['title'];
+            }
+            ?>
+            </h1>
             <button class="add_friends"><i class="fas fa-user-plus"></i> Zaproś znajomych</button>
             <div class="main">
             
@@ -76,11 +85,11 @@
                                 </div>
                                 <h5><i class="fas fa-code-branch"></i> Ukończono</h5>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="'.$task_list['progress'].'" aria-valuemin="0" aria-valuemax="100" data-id="'.$task_list['id'].'">'.$task_list['progress'].'%</div>
+                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-id="'.$task_list['id'].'">0%</div>
                                 </div>
                                 <h5><i class="fas fa-users"></i> Odpowiedzialni <span class="add_member" data-id="'.$task_list['id'].'"><i class="fas fa-user-plus"></i> Dodaj</span></h5>
-                                <div class="members_container" >';
-                                $sql = "SELECT tasks_members.member_id , users.avatar_src, users.username from tasks_members, users WHERE tasks_members.task_id=".$task_list['id']."";
+                                <div class="members_container" data-id="'.$task_list['id'].'">';
+                                $sql = "SELECT tasks_members.member_id , users.avatar_src, users.username from tasks_members, users WHERE tasks_members.task_id=".$task_list['id']." AND tasks_members.member_id=users.id";
                                 if($result2 = $db->query($sql)){
                                     while($members_list = $result2->fetch_assoc()){
                                         echo
@@ -110,7 +119,7 @@
                                                 echo '<input class="task_checkbox" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'" type="checkbox" checked>';
                                             }
                                             echo
-                                            '<input class="task_description" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'" data-type="input" value="'.$task['description'].'" type="text"/>
+                                            '<input class="task_description" data-id="'.$task_list['id'].'" data-task_id="'.$task['id'].'" data-type="input" data-name="task_description" value="'.$task['description'].'" type="text"/>
                                         </div>';
                                     }
                                 }
@@ -123,11 +132,13 @@
                 }
             ?>
                 <div class="add_task_list_container">
-                    <span class="add_task_list"><i class="fas fa-tasks pr-2"></i>Dodaj nową listę zadań</span>
+                    <span class="add_task_list"><i class="fas fa-clipboard-list pr-2"></i>Dodaj nową listę zadań</span>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div id="dialog_window"></div>
         
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -135,5 +146,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <!-- Optional JavaScript -->
     <script src="js/event_manager.js"></script>
+    <script src="js/windows.js"></script>
 </body>
 </html>

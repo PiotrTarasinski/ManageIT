@@ -30,7 +30,7 @@
 }
 
 .main{
-    padding-bottom: 40px;
+    padding-bottom: 30px;
 }
 
 .col{
@@ -49,15 +49,12 @@
     overflow: hidden;
 }
 
-.edit_icon , .delete_icon{
+.edit_icon , .delete_icon, .sign_off{
     position: absolute;
     z-index: 10;
     top: 4px;
     opacity: 0.6;
     transition: opacity 0.5s;
-}
-
-.edit_icon , .delete_icon{
     cursor: pointer;
 }
 
@@ -66,12 +63,12 @@
     color: #f1c40f;
 }
 
-.delete_icon{
+.delete_icon , .sign_off{
     right: 10px;
     color: #f12727;
 }
 
-.edit_icon:hover , .delete_icon:hover{
+.edit_icon:hover , .delete_icon:hover, .sign_off:hover{
     opacity: 1;
 }
 

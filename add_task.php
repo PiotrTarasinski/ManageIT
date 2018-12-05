@@ -23,7 +23,7 @@
         '<div class="task" data-id="'.$task_list_id.'" data-task_id="'.$task_id.'">
             <span class="delete_task" data-id="'.$task_list_id.'" data-task_id="'.$task_id.'"><i class="fas fa-times-circle"></i></span>
             <input class="task_checkbox" data-id="'.$task_list_id.'" data-task_id="'.$task_id.'" type="checkbox">
-            <input class="task_description" data-id='.$task_list_id.'"" data-task_id="'.$task_id.'" data-type="input" value="Nowe zadanie" type="text"/>
+            <input class="task_description" data-id='.$task_list_id.'"" data-task_id="'.$task_id.'" data-name="task_description" data-type="input" value="Nowe zadanie" type="text"/>
         </div>';
     }
 

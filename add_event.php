@@ -23,7 +23,7 @@
         $event_id = $db->get_inserted_id();
         echo 
         '<!--CARD-->
-        <div class="col">
+        <div class="col" data-id="'.$event_id.'">
             <div class="event_card">
                 <div class="event_card_img_container">
                     <span class="edit_icon" onclick="editEvent(this)" data-disabled="1" data-id="'.$event_id.'"><i class="fas fa-edit"></i></span>

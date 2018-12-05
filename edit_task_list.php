@@ -10,16 +10,22 @@
     $task_list_id = $_POST['task_list_id'];
     $name = $_POST['name'];
     $value = $_POST['value'];
+    $task_id = $_POST['task_id'];
 
     //sql query
-    if($name == "progress"){
-        $sql ="UPDATE tasks_list SET progress = '$value' WHERE tasks_list.id = '$task_list_id'";
+    if($name == "title"){
+        $sql ="UPDATE tasks_list SET title = '$value' WHERE tasks_list.id = '$task_list_id'";
+    }
+    else if($name == "date"){
+        $sql ="UPDATE tasks_list SET date = '$value' WHERE tasks_list.id = '$task_list_id'";
+    }
+    else if($name == "task_description"){
+        $sql ="UPDATE tasks SET description = '$value' WHERE tasks.id = '$task_id'";
     }
     //create connection to database
     $db = new db();
 
     if($result = $db->query($sql)){
-        //succes
     }
 
     //close connection to database

@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet"href="css/events.css">
     <link rel="stylesheet" href="css/navbar_logged.css">
+    <link rel="stylesheet" href="css/windows.css">
 </head>
 
 <body>
@@ -50,13 +51,17 @@
                             if($result2 = $db->query($sql)){
                                 $events_variable = $result2->fetch_assoc();
                                 echo 
-                                '<div class="col">
+                                '<div class="col" data-id="'.$events_id['event_id'].'">
                                     <div class="event_card">
                                         <div class="event_card_img_container">';
                                             if($events_variable['creator_id']==$_SESSION['user_id']){
                                                 echo
                                                 '<span class="edit_icon" onclick="editEvent(this)" data-disabled="1" data-id="'.$events_id['event_id'].'"><i class="fas fa-edit"></i></span>
                                                 <span class="delete_icon"  data-id="'.$events_id['event_id'].'"><i class="fas fa-trash-alt"></i></span>';
+                                            }
+                                            else{
+                                                echo
+                                                '<span class="sign_off"  data-id="'.$events_id['event_id'].'"><i class="fas fa-times-circle"></i></span>';
                                             }
                                             echo
                                             '<label for="add_event_card_img" onclick="triggerInputFile(this)" class="add_img_button hide" data-id="'.$events_id['event_id'].'">
@@ -98,6 +103,8 @@
             
         </div>
     </div>
+
+    <div id="dialog_window"></div>
         
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -105,5 +112,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <!-- Optional JavaScript -->
     <script src="js/events.js"></script>
+    <script src="js/windows.js"></script>
 </body>
 </html>

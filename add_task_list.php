@@ -10,11 +10,9 @@
     $title = "Nowa lista zadań";
     $date = date('Y-m-d');
     $event_id = $_POST['event_id'];
-    $progress = 0;
-
 
     //sql query
-    $sql = "INSERT INTO tasks_list (id, event_id, title, date, progress) VALUES (NULL,'$event_id','$title','$date','$progress')";
+    $sql = "INSERT INTO tasks_list (id, event_id, title, date) VALUES (NULL,'$event_id','$title','$date')";
     
     //create connection to database
     $db = new db();

@@ -1,4 +1,3 @@
-
 //get parameters from url
 $.urlParam = function(name){
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -19,9 +18,26 @@ $(document).on('focusout','[data-type="input"]', function() {
 
 //if input values got changed send it to database
 $(document).on('change','[data-type="input"]', function() {
-    alert("change");
+    var task_list_id = this.getAttribute('data-id');
+    var name = this.getAttribute('data-name');
+    var task_id = this.getAttribute('data-task_id');
+    var value = $(this).val();
+    editTaskList(task_list_id, name, value, task_id)
 });
 
+function editTaskList(task_list_id, name, value, task_id){
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/ManageIT/edit_task_list.php",
+        data: {
+            edit_task_list: true,
+            task_list_id:  task_list_id,
+            name: name,
+            value: value,
+            task_id: task_id
+        },
+    })
+}
 
 $(document).ready(function(){
     //add new task list
@@ -52,7 +68,7 @@ $(document).ready(function(){
             },
         })
         .done(response => {
-             $(".task_container[data-id="+task_list_id+"]").prepend(response);
+             $(".task_container[data-id="+task_list_id+"]").append(response);
              uptadeProgressBar(task_list_id);
         })
     });
@@ -75,10 +91,50 @@ $(document).ready(function(){
         })
     });
 
-    $(".task_card").each(function(){
-        var task_list_id = $(this).getAttribute('data-id');
-        uptadeProgressBar(task_list_id);
-    })
+    //remove member from task
+    $(document).on('click','.delete_member', function() {
+        var task_list_id = this.getAttribute('data-id');
+        var user_id = this.getAttribute('data-user_id');
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/ManageIT/remove_member.php",
+            data: {
+                remove_member: true,
+                task_list_id:  task_list_id,
+                user_id: user_id
+            },
+        })
+        .done(response => {
+             $(".member_container[data-id="+task_list_id+"][data-user_id="+user_id+"]").remove();
+        })
+    });
+    
+
+
+    //checbkox function
+    $(document).on('click','.task_checkbox', function(){
+        var task_id = this.getAttribute('data-task_id');
+        var task_list_id = this.getAttribute('data-id');
+        var status = 0;
+        if($(this).prop('checked')){
+            status = 1;
+        }
+        else{
+            status=0;
+        }
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/ManageIT/change_task_status.php",
+            data: {
+                change_status: true,
+                task_id:  task_id,
+                status: status
+            },
+        })
+        .done(response => {
+             uptadeProgressBar(task_list_id);
+        })
+    });
 
     //this function uptades progress bar
     function uptadeProgressBar(task_list_id){
@@ -92,7 +148,7 @@ $(document).ready(function(){
             }
         })
         if(checkboxes == 0){
-            score = 0;
+            score = 100;
         }
         else{
             score = ( checked_checboxes / checkboxes ) * 100;
@@ -100,19 +156,26 @@ $(document).ready(function(){
         }
         
         $(".progress-bar[data-id="+task_list_id+"]").css('width', score+'%').attr('aria-valuenow', score).text(score+"%");
-        //editTaskList(task_list_id,"progress",score);
     }
 
-    function editTaskList(task_list_id, name, value){
+    //remove card_list
+    $(document).on('click','.delete_task_list', function() {
+        var task_list_id = this.getAttribute('data-id');
         $.ajax({
             type: "POST",
-            url: "http://localhost/ManageIT/edit_task_list.php",
+            url: "http://localhost/ManageIT/remove_task_list.php",
             data: {
-                edit_task_list: true,
+                remove_task_list: true,
                 task_list_id:  task_list_id,
-                name: name,
-                value: value
             },
         })
-    }
+        .done(response => {
+             $(".task_card[data-id="+task_list_id+"]").remove();
+        })
+    });
+
+    $(".task_card").each(function(){
+        var task_list_id = this.getAttribute('data-id');
+        uptadeProgressBar(task_list_id);
+    })
 });
